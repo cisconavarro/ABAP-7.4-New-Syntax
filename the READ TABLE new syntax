@@ -1,0 +1,50 @@
+I. the READ TABLE syntax
+
+1. Read with index number.
+
+  Before ABAP 7.40
+   READ TABLE it_flights INTO ls_flight INDEX 1.
+
+  From ABAP 7.40
+   ls_flight = it_flights[ 1 ].
+
+2. Read with index variable.
+
+  Before ABAP 7.40
+  READ TABLE it_flights INTO ls_flight INDEX lv_idx.
+
+  From ABAP 7.40
+   ls_flight = it_flights[ lv_idx ].
+
+3. Read with free key
+
+  Before ABAP 7.40
+   READ TABLE it_flights INTO ls_flight WITH KEY carrid = 'SQ'.
+
+  From ABAP 7.40
+   ls_flight = it_flights[ carrid = 'SQ' ].
+
+4. Read with more than one free key
+
+  Before ABAP 7.40
+   READ TABLE it_flights INTO ls_flight WITH KEY carrid = 'SQ' connid = '0026'.
+  
+  From ABAP 7.40
+   ls_flight = it_flights[ carrid = 'SQ' connid = '0026' ].
+
+5. Raises an exception CX_SY_ITAB_LINE_NOT_FOUND when the read expression failsg
+TRY .
+    DATA(ls_flight) = it_flights[ 1 ].
+
+    MESSAGE "Read successful" TYPE 'S'.
+  CATCH cx_sy_itab_line_not_found.
+    MESSAGE 'Read failed' TYPE 'E'.    
+ENDTRY.
+
+6. The result of the expression can be assigned to a field symbol as well
+ASSIGN it_flights[ carrid = 'SQ' ] to FIELD-SYMBOL(<fs_flight>).
+IF sy-subrc EQ 0.
+  "Read is successful
+ELSE.
+  "Read has failed
+ENDIF.
