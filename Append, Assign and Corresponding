@@ -1,0 +1,36 @@
+I. Append:
+
+            IF sl_archivo IS NOT INITIAL.
+              r_t_data = VALUE #( BASE r_t_data ( sl_archivo ) ).
+            ENDIF.
+          ENDLOOP.
+
+II. Assign
+
+    lst_sl_cab = VALUE #( badat           = vl_fecha
+                          banfn           = i_solped
+                          normativa       = vl_normativa
+                          org_solicitante = vl_name_organismo
+                          adquisicion     = vl_descr_compra
+                          ekorg           = vl_organismo
+                          ekotx           = vl_desc_organismo
+                          ekotx2          = vl_name_organismo
+                          waers           = vl_moneda
+                          preis           = vl_monto_f2
+                          word            = vl_monto_inwords-word ).
+
+III. Work area + append:
+                      sl_vbrk_aux = VALUE #( vbeln = sl_tl_vbrk-vbeln
+                                             gjahr = sl_tl_vbrk-gjahr
+                                             rfbsk = sl_tl_vbrk-rfbsk
+                                             waerk = sl_tl_vbrk-waerk ).
+
+                      tl_vbrk_aux = VALUE #( BASE tl_vbrk_aux ( sl_vbrk_aux ) ).
+
+4. Corresponding:
+
+"new way
+wa_tab1 = CORRESPONDING # ( wa_tab2 ).
+
+"old way
+MOVE-CORRESPONDING wa_tab1 to wa_tab2.
