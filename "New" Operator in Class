@@ -1,0 +1,33 @@
+I. NEW Operator
+
+Suppose you want to create an object for a class ZCL_ABAP, below is the syntax.
+
+a. New way
+
+DATA(lo_abap) = NEW zcl_abap( ).    
+This is similar to below piece of code.
+
+b. Old way
+DATA lo_abap1 TYPE REF TO lcl_abap.  
+CREATE OBJECT lo_abap1.
+
+You can create the object as below and use it to call the method.
+
+DATA(lo_abap) = NEW lcl_abap( 'JAGDISHP' ).
+DATA(lv_name) = lo_abap->get_name( ).
+Here, there is only one Importing parameter for the constructor, so a value can be passed without parameter name. When there are multiple parameters in the constructor or the method, we need to specify the name in the call.
+
+DATA(lo_abap) = NEW lcl_abap( iv_user = 'JAGDISHP' 
+                              iv_type = 'Dialog' ). "only for demo
+
+For reference, below is the old way to do the same thing
+
+DATA lo_abap1 TYPE REF TO lcl_abap.
+
+CREATE OBJECT lo_abap1
+  EXPORTING
+    iv_user = 'JAGDISHP'.
+
+CALL METHOD lo_abap->get_name
+  RECEIVING
+    rv_name = lv_name.
